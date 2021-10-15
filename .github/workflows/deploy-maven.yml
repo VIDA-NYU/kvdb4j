@@ -1,0 +1,27 @@
+name: Publish maven snapshot to GitHub
+on:
+  workflow_run:
+    workflows: ["kvdb4j build"]
+    types:
+      - completed
+
+jobs:
+  deploy-maven:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin'
+          java-version: 11
+
+      - name: Validate Gradle wrapper
+        uses: gradle/wrapper-validation-action@v1
+
+      - name: Publish maven snapshot to GitHub
+        run: ./gradlew publishMavenPublicationToGitHubPackagesRepository
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
