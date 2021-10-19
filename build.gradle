@@ -3,7 +3,7 @@ plugins {
     id 'maven-publish'
 }
 
-group 'edu.nyu.engineering.vida'
+group 'io.github.vida-nyu'
 version '0.1-SNAPSHOT'
 
 repositories {
@@ -40,7 +40,7 @@ publishing {
             pom {
                 name = 'KVDB4J'
                 description = 'A simple Java interface for multiple key-value stores.'
-                url = 'https://github.com/ViDA-NYU/kvdb4j'
+                url = 'https://github.com/VIDA-NYU/kvdb4j'
                 licenses {
                     license {
                         name = 'The Apache License, Version 2.0'
@@ -55,7 +55,7 @@ publishing {
                 }
                 scm {
                     connection = 'scm:git:git@github.com:VIDA-NYU/kvdb4j.git'
-                    url = 'https://github.com/ViDA-NYU/kvdb4j'
+                    url = 'https://github.com/VIDA-NYU/kvdb4j'
                 }
             }
         }
@@ -63,7 +63,7 @@ publishing {
     repositories {
         maven {
             name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/ViDA-NYU/kvdb4j")
+            url = uri("https://maven.pkg.github.com/VIDA-NYU/kvdb4j")
             credentials {
                 username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_ACTOR")
                 password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
