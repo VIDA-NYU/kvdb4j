@@ -1,16 +1,16 @@
 package edu.nyu.engineering.vida.kvdb4j.api;
 
-public class StringIntHashtable extends AbstractKVDB {
+public class StringIntKVDB extends AbstractKVDB {
 
   private final int DEFAULT_ABSENT_VALUE = -1;
   private final int absentValue;
 
-  public StringIntHashtable(KVDB db, int absentValue) {
+  public StringIntKVDB(KVDB db, int absentValue) {
     super(db);
     this.absentValue = absentValue;
   }
 
-  public StringIntHashtable(KVDB db) {
+  public StringIntKVDB(KVDB db) {
     super(db);
     this.absentValue = DEFAULT_ABSENT_VALUE;
   }
