@@ -62,4 +62,7 @@ the `IO` interface (`KryoIO` implements this interface).
 
 Storing native data types is also possible using specialized classes:
 - `StringIntKVDB`, key is `String` and value is `int`.
-- `IntString`, key is `int` and value is `String`.
+- `IntStringKVDB`, key is `int` and value is `String`.
+- `BytesBytesKVDB`, key is `byte[]` and value is `byte[]`.
+- `IntStringKVDB`, key is `int` and value is `String`.
+- `StringObjectKVDB`, key is `String` and value is `Object`.
