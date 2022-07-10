@@ -2,7 +2,7 @@ package edu.nyu.engineering.vida.kvdb4j.api;
 
 public class StringObjectKVDB<V> extends AbstractKVDB implements Iterable<KV<String, V>> {
 
-  private IO<V> io;
+  private final IO<V> io;
 
   public StringObjectKVDB(KVDB db, IO<V> io) {
     super(db);
