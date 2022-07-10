@@ -43,22 +43,26 @@ public class KvdbBackendTest {
     assertEquals("1", odb.get("a"));
     assertEquals("2", odb.get("b"));
 
-    CloseableIterator<KV<String, String>> it = odb.iterator();
+    try(CloseableIterator<KV<String, String>> it = odb.iterator()){
 
-    assertTrue(it.hasNext());
+      assertTrue(it.hasNext());
 
-    KV<String, String> next;
-    next = it.next();
-    assertEquals("a", next.getKey());
-    assertEquals("1", next.getValue());
+      KV<String, String> next;
+      next = it.next();
+      assertEquals("a", next.getKey());
+      assertEquals("1", next.getValue());
 
-    assertTrue(it.hasNext());
-    next = it.next();
-    assertEquals("b", next.getKey());
-    assertEquals("2", next.getValue());
+      assertTrue(it.hasNext());
+      next = it.next();
+      assertEquals("b", next.getKey());
+      assertEquals("2", next.getValue());
 
-    assertFalse(it.hasNext());
-    assertNull(it.next());
+      assertFalse(it.hasNext());
+      assertNull(it.next());
+
+    } catch (Exception e) {
+      throw new RuntimeException("Failed to close the database iterator", e);
+    }
 
     odb.close();
   }
