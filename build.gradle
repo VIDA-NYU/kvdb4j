@@ -33,6 +33,7 @@ java {
     withSourcesJar()
 }
 
+// Setup publishing to Maven repositories
 publishing {
     publications {
         maven(MavenPublication) {
@@ -55,7 +56,7 @@ publishing {
                 developers {
                     developer {
                         name = 'Aécio Santos'
-                        email = 'aecio.solando@gmail.com'
+                        email = '150570+aecio@users.noreply.github.com'
                     }
                 }
                 scm {
@@ -72,21 +73,31 @@ publishing {
             def releasesUrl = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
             url = version.endsWith('SNAPSHOT') ? snapshotsUrl : releasesUrl
             credentials {
-                username = project.findProperty("ossrhUsername") ?: System.getenv("MAVEN_USERNAME")
-                password = project.findProperty("ossrhPassword") ?: System.getenv("MAVEN_PASSWORD")
-            }
-        }
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/VIDA-NYU/kvdb4j")
-            credentials {
-                username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_ACTOR")
-                password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
+                username = project.findProperty("ossrhUsername") ?: System.getenv("OSSRH_USERNAME")
+                password = project.findProperty("ossrhPassword") ?: System.getenv("OSSRH_PASSWORD")
             }
         }
     }
 }
 
+// Configure artifact signing (required for publishing to Sonatype maven repository)
 signing {
+    //
+    // The following setup allows to pass the key identifier, secret key (in ascii-armored
+    // format), and the password using the following environment variables respectively:
+    // - ORG_GRADLE_PROJECT_signingKey
+    // - ORG_GRADLE_PROJECT_signingPassword
+    //
+    // Command line example for singing maven publication:
+    //   ORG_GRADLE_PROJECT_signingKey=$(cat ~/.gnupg/kvdb4j.asc) \
+    //   ORG_GRADLE_PROJECT_signingPassword=$SIGNING_KEY_PWD \
+    //   gradle signMavenPublication
+    //
+    def signingKey = findProperty("signingKey")
+    def signingPassword = findProperty("signingPassword")
+    useInMemoryPgpKeys(signingKey, signingPassword)
+
+    // Specify what should be signed (the maven publication)
     sign publishing.publications.maven
 }
+
