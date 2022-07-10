@@ -1,4 +1,4 @@
-name: Publish maven snapshot to GitHub
+name: Publish to maven repository
 on:
   workflow_run:
     workflows: ["kvdb4j build"]
